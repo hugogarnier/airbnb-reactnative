@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, ActivityIndicator } from "react-native";
-import colors from "../colors";
+import colors from "../constants/colors";
 
 export default function ErrorAndLoading({ isLoading, error, fieldEmpty }) {
   return (
@@ -9,18 +9,15 @@ export default function ErrorAndLoading({ isLoading, error, fieldEmpty }) {
         <ActivityIndicator size='large' color={colors.primary} />
       ) : null}
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      {fieldEmpty ? (
-        <Text style={[styles.error, { textAlign: "center", marginBottom: 10 }]}>
-          {fieldEmpty}
-        </Text>
-      ) : null}
+      {fieldEmpty ? <Text style={styles.error}>{fieldEmpty}</Text> : null}
     </>
   );
 }
 
 const styles = StyleSheet.create({
   error: {
-    textAlign: "center",
     color: colors.primary,
+    textAlign: "center",
+    marginBottom: 10,
   },
 });

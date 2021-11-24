@@ -10,8 +10,11 @@ import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
+import AroundMeScreen from "./containers/AroundMeScreen";
+import RoomScreen from "./containers/RoomScreen";
 import SplashScreen from "./containers/SplashScreen";
-import colors from "./colors";
+import colors from "./constants/colors";
+import LogoTitle from "./components/LogoTitle";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -89,36 +92,29 @@ export default function App() {
                   }}
                 >
                   {() => (
-                    <Stack.Navigator>
-                      <Stack.Screen
-                        name='Home'
-                        options={{
-                          title: "My App",
-                          headerStyle: { backgroundColor: colors.primary },
-                          headerTitleStyle: { color: "white" },
-                        }}
-                      >
+                    <Stack.Navigator
+                      screenOptions={{
+                        headerTitle: (props) => <LogoTitle {...props} />,
+                        headerTitleAlign: "center",
+                      }}
+                    >
+                      <Stack.Screen name='Home'>
                         {() => <HomeScreen />}
                       </Stack.Screen>
 
-                      <Stack.Screen
-                        name='Profile'
-                        options={{
-                          title: "User Profile",
-                        }}
-                      >
-                        {() => <ProfileScreen />}
+                      <Stack.Screen name='Room'>
+                        {() => <RoomScreen />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
                 <Tab.Screen
-                  name='TabSettings'
+                  name='TabAround'
                   options={{
-                    tabBarLabel: "Settings",
+                    tabBarLabel: "Around me",
                     tabBarIcon: ({ color, size }) => (
                       <Ionicons
-                        name={"ios-options"}
+                        name={"ios-location-outline"}
                         size={size}
                         color={color}
                       />
@@ -128,12 +124,38 @@ export default function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name='Settings'
+                        name='AroundMe'
                         options={{
-                          title: "Settings",
+                          title: "Around me",
                         }}
                       >
-                        {() => <SettingsScreen setToken={setToken} />}
+                        {() => <AroundMeScreen setToken={setToken} />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+                <Tab.Screen
+                  name='My profile'
+                  options={{
+                    tabBarLabel: "My profile",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons
+                        name={"person-outline"}
+                        size={size}
+                        color={color}
+                      />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name='Profile'
+                        options={{
+                          title: "Profile",
+                        }}
+                      >
+                        {() => <ProfileScreen setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

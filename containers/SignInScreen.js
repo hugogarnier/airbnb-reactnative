@@ -7,13 +7,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  ActivityIndicator,
   Dimensions,
 } from "react-native";
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import colors from "../colors";
+import colors from "../constants/colors";
 import PasswordInput from "../components/PasswordInput";
 import Button from "../components/Button";
 import ErrorAndLoading from "../components/ErrorAndLoading";
@@ -29,12 +28,16 @@ export default function SignInScreen({ setToken }) {
   const width = Dimensions.get("window").width;
 
   const handleLogin = async () => {
+    const regex =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     if (!password || !email) {
+      setError("");
       setFieldEmpty("Please fill all fields");
-    } else {
+    } else if (regex.test(email)) {
+      setFieldEmpty("");
       try {
         setIsLoading(true);
-        setFieldEmpty("");
         const response = await axios.post(
           "https://express-airbnb-api.herokuapp.com/user/log_in",
           {
@@ -51,6 +54,9 @@ export default function SignInScreen({ setToken }) {
         email && password && setError("Email or password incorrect");
         setIsLoading(false);
       }
+    } else {
+      setFieldEmpty("");
+      setError("Format email incorrect");
     }
   };
 

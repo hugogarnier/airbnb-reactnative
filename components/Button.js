@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import colors from "../colors";
+import colors from "../constants/colors";
 
 export default function Button({ handlePress, isLoading, text }) {
   return (

@@ -12,7 +12,7 @@ import {
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import colors from "../colors";
+import colors from "../constants/colors";
 import PasswordInput from "../components/PasswordInput";
 import Button from "../components/Button";
 import ErrorAndLoading from "../components/ErrorAndLoading";
@@ -31,34 +31,44 @@ export default function SignUpScreen({ setToken }) {
   const width = Dimensions.get("window").width;
 
   const handleSignUp = async () => {
+    const regex =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     if (!password || !email || !description || !confirmPassword) {
       setError("");
       setFieldEmpty("Please fill all fields");
-    } else if (password === confirmPassword) {
-      try {
-        setIsLoading(true);
-        setFieldEmpty("");
-        const response = await axios.post(
-          "https://express-airbnb-api.herokuapp.com/user/sign_up",
-          {
-            email,
-            password,
-            description,
-            username,
-          }
-        );
-        // console.log(response.data);
-        setToken(response.data.token);
-        setError("");
-        setIsLoading(false);
-      } catch (error) {
-        // console.log(error.response.data);
-        email && password && setError("Email or password incorrect");
-        setIsLoading(false);
+    } else if (regex.test(email)) {
+      setFieldEmpty("");
+      if (password === confirmPassword) {
+        try {
+          setIsLoading(true);
+          const response = await axios.post(
+            "https://express-airbnb-api.herokuapp.com/user/sign_up",
+            {
+              email,
+              password,
+              description,
+              username,
+            }
+          );
+          // console.log(response.data);
+          setToken(response.data.token);
+          setError("");
+          setIsLoading(false);
+        } catch (error) {
+          // console.log(error.response.data);
+
+          error.response.data.error ===
+            "This username already has an account" &&
+            setError("Username already exists");
+          setIsLoading(false);
+        }
+      } else {
+        setError("Passwords must be the same");
       }
     } else {
       setFieldEmpty("");
-      setError("Passwords must be the same");
+      setError("Format email incorrect");
     }
   };
 

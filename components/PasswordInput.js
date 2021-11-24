@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import colors from "../colors";
+import colors from "../constants/colors";
 
 export default function PasswordInput({ password, setPassword, placeholder }) {
   const [passwordVisible, setPasswordVisible] = useState(true);
