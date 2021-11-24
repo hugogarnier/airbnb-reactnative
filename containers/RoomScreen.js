@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/core";
+import MapView, { Marker } from "react-native-maps";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import {
   ActivityIndicator,
   Image,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,7 +13,7 @@ import {
 } from "react-native";
 import axios from "axios";
 
-import { width } from "../constants/dimensions";
+import { width, height } from "../constants/dimensions";
 import colors from "../constants/colors";
 import Stars from "../components/Stars";
 
@@ -52,7 +54,7 @@ export default function RoomScreen() {
           <View style={styles.photos}>
             <SwiperFlatList
               autoplay={false}
-              index={2}
+              index={0}
               showPagination
               data={data.photos}
               renderItem={({ item }) => (
@@ -93,6 +95,25 @@ export default function RoomScreen() {
               </Text>
             </TouchableOpacity>
           </View>
+          <MapView
+            style={styles.map}
+            region={{
+              latitude: data.location[1],
+              longitude: data.location[0],
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }}
+          >
+            <Marker
+              coordinate={{
+                latitude: data.location[1],
+                longitude: data.location[0],
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+              }}
+              // icon={require("../assets/marker.png")}
+            />
+          </MapView>
         </View>
       )}
     </>
@@ -135,5 +156,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
+  },
+  map: {
+    marginTop: 20,
+    width: width,
+    height: Platform.OS === "ios" ? height - 600 : height - 500,
   },
 });

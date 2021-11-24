@@ -102,7 +102,12 @@ export default function App() {
                         {() => <HomeScreen />}
                       </Stack.Screen>
 
-                      <Stack.Screen name='Room'>
+                      <Stack.Screen
+                        name='Room'
+                        options={{
+                          headerBackTitleVisible: false,
+                        }}
+                      >
                         {() => <RoomScreen />}
                       </Stack.Screen>
                     </Stack.Navigator>
