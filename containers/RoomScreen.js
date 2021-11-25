@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/core";
+import { useRoute } from "@react-navigation/core";
 import MapView, { Marker } from "react-native-maps";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import {
@@ -15,12 +15,10 @@ import axios from "axios";
 
 import { width, height } from "../constants/dimensions";
 import colors from "../constants/colors";
-import Stars from "../components/Stars";
+import displayStars from "../components/displayStars";
 
 export default function RoomScreen() {
-  // const navigation = useNavigation();
   const { params } = useRoute();
-
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const [numberOfLines, setNumberOflLines] = useState(3);
@@ -73,7 +71,9 @@ export default function RoomScreen() {
                   {data.title}
                 </Text>
                 <View style={styles.stars}>
-                  <Stars stars={data.ratingValue} />
+                  <View style={{ flexDirection: "row" }}>
+                    {displayStars(data.ratingValue)}
+                  </View>
                   <Text
                     style={{ fontSize: 14, color: colors.text, marginLeft: 10 }}
                   >

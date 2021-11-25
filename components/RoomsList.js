@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import colors from "../constants/colors";
 import { width } from "../constants/dimensions";
-import Stars from "./Stars";
+import displayStars from "./displayStars";
 
 export default function RoomsList({ data }) {
   const navigation = useNavigation();
@@ -34,7 +34,10 @@ export default function RoomsList({ data }) {
                 {item.title}
               </Text>
               <View style={styles.stars}>
-                <Stars stars={item.ratingValue} />
+                {/* <Stars stars={item.ratingValue} /> */}
+                <View style={{ flexDirection: "row" }}>
+                  {displayStars(item.ratingValue)}
+                </View>
                 <Text
                   style={{ fontSize: 14, color: colors.text, marginLeft: 10 }}
                 >

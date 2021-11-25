@@ -96,6 +96,7 @@ export default function App() {
                       screenOptions={{
                         headerTitle: (props) => <LogoTitle {...props} />,
                         headerTitleAlign: "center",
+                        headerTintColor: colors.primary,
                       }}
                     >
                       <Stack.Screen name='Home'>
@@ -127,13 +128,13 @@ export default function App() {
                   }}
                 >
                   {() => (
-                    <Stack.Navigator>
-                      <Stack.Screen
-                        name='AroundMe'
-                        options={{
-                          title: "Around me",
-                        }}
-                      >
+                    <Stack.Navigator
+                      screenOptions={{
+                        headerTitle: (props) => <LogoTitle {...props} />,
+                        headerTitleAlign: "center",
+                      }}
+                    >
+                      <Stack.Screen name='AroundMe'>
                         {() => <AroundMeScreen setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
