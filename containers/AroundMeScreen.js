@@ -37,16 +37,17 @@ export default function AroundMeScreen() {
 
   useEffect(() => {
     const rooms = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(
-          `https://express-airbnb-api.herokuapp.com/rooms/around?latitude=${coords.latitude}&longitude=${coords.longitude}`
-        );
+      if (coords) {
+        try {
+          const response = await axios.get(
+            `https://express-airbnb-api.herokuapp.com/rooms/around?latitude=${coords.latitude}&longitude=${coords.longitude}`
+          );
 
-        setData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
+          setData(response.data);
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error);
+        }
       }
     };
     rooms();
@@ -91,7 +92,7 @@ export default function AroundMeScreen() {
                   key={marker._id}
                   image={require("../assets/acc.png")}
                   onPress={() =>
-                    navigation.navigate("Room", { id: marker._id })
+                    navigation.navigate("RoomFromMap", { id: marker._id })
                   }
                 />
               );

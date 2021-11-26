@@ -46,7 +46,7 @@ export default function SignInScreen({ setToken }) {
           }
         );
         // console.log(response.data);
-        setToken(response.data.token);
+        setToken(response.data.token, response.data.id);
         setError("");
         setIsLoading(false);
       } catch (error) {
