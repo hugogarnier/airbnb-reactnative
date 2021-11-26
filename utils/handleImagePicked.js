@@ -3,7 +3,6 @@ import axios from "axios";
 const handleImagePicked = async (
   image,
   userToken,
-  userId,
   email,
   username,
   description
@@ -20,24 +19,21 @@ const handleImagePicked = async (
 
       // On ajoute à l'object formData une clé photo
       formData.append("photo", {
-        image,
+        uri: image,
         name: `photo.${fileType}`,
-        type: `image/${fileType}`, // la clé type doit être obligatoirement précisée en React Native
+        type: `image/${fileType}`,
       });
-      console.log(formData);
       // La requête pour envoyer l'image au serveur
-      const uploadResponse = await axios.put(
+      await axios.put(
         `https://express-airbnb-api.herokuapp.com/user/upload_picture`,
         formData,
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
-            Accept: "application/json",
             "Content-Type": "multipart/form-data",
           },
         }
       );
-      console.log(uploadResponse);
     }
     const body = {
       email: email,
@@ -55,14 +51,7 @@ const handleImagePicked = async (
       }
     );
 
-    // console.log(uploadResponse.data.photo[0].url);
-    return response.data;
-    // if (
-    //   Array.isArray(uploadResponse.data.photo) === true &&
-    //   uploadResponse.data.photo.length > 0
-    // ) {
-    //   setImage(uploadResponse.data.photo[0].url);
-    // }
+    return response.status;
   } catch (e) {
     console.log(e.response.data);
     // alert("Upload failed, sorry :(");

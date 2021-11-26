@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/core";
-import { Image, StyleSheet, TextInput, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Ionicons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
+import Constants from "expo-constants";
 
 import Button from "../components/Button";
 import colors from "../constants/colors";
@@ -20,6 +27,7 @@ export default function ProfileScreen({ setToken, userId, userToken }) {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -35,7 +43,7 @@ export default function ProfileScreen({ setToken, userId, userToken }) {
         setDescription(response.data.description);
         setEmail(response.data.email);
         setUsername(response.data.username);
-        setImage(response.data.photo);
+        setImage(response.data.photo[0].url);
       } catch (error) {
         console.log(error.response.data.error);
       }
@@ -56,8 +64,9 @@ export default function ProfileScreen({ setToken, userId, userToken }) {
     setToken(null);
     navigation.navigate("Home");
   };
-  const handleUpdate = () => {
-    const response = handleImagePicked(
+  const handleUpdate = async () => {
+    setUploading(true);
+    const response = await handleImagePicked(
       image,
       userToken,
       userId,
@@ -65,7 +74,11 @@ export default function ProfileScreen({ setToken, userId, userToken }) {
       username,
       description
     );
-    // console.log(response.data);
+
+    if (response === 200) {
+      setUploading(false);
+      setUploadSuccess(true);
+    }
   };
   return (
     <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
@@ -124,6 +137,11 @@ export default function ProfileScreen({ setToken, userId, userToken }) {
           />
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
+          {uploading ? (
+            <ActivityIndicator size='large' color={colors.primary} />
+          ) : (
+            uploadSuccess && <Text>Profile uploaded !</Text>
+          )}
           <Button handlePress={handleUpdate} text='Update' isLoading={false} />
           <Button handlePress={handleLogout} text='Log out' isLoading={false} />
         </View>
