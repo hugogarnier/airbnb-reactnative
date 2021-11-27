@@ -14,7 +14,7 @@
 
 ## Overview
 
-**Perfect to start an Airbnb Clone app.** 5 screens are availables : SignIn, SingUp, Home, Around Me and Profile. You'll find some components like Button Component to pass props and variant. No frameworks UI used.
+**Perfect to start an Airbnb Clone app.** 5 screens are availables : SignIn, SingUp, Home, Around Me and Profile. You'll find some components like Button Component to pass props and some features like MapView and access to Gallery & Camera. No frameworks UI used.
 
 - **Easy to use** 🤘
 - **Made with Expo** ⚡
@@ -23,9 +23,7 @@ This project was realized @ [Le Reacteur](https://www.lereacteur.io/?utm_source=
 
 ## Demo
 
-You can try it here :
-
-<!-- https://expo.io/@stevenpersia/projects/tinder-expo -->
+You can try it here : https://expo.dev/@hugo0/Airbnb-clone
 
 ## Screenshots
 
