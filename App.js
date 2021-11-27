@@ -9,10 +9,10 @@ import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
-import SettingsScreen from "./containers/SettingsScreen";
+// import SettingsScreen from "./containers/SettingsScreen";
 import AroundMeScreen from "./containers/AroundMeScreen";
 import RoomScreen from "./containers/RoomScreen";
-import SplashScreen from "./containers/SplashScreen";
+// import SplashScreen from "./containers/SplashScreen";
 import colors from "./constants/colors";
 import LogoTitle from "./components/LogoTitle";
 
